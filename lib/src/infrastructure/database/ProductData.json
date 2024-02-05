@@ -1,0 +1,52 @@
+[
+    {
+      "Id": "1",
+      "Name": "Dumbbell",
+      "Kilograms": "5"
+    },
+    {
+      "Id": "2",
+      "Name": "Barbell",
+      "Kilograms": "20"
+    },
+    {
+      "Id": "3",
+      "Name": "Treadmill",
+      "Kilograms": "100"
+    },
+    {
+      "Id": "4",
+      "Name": "Stationary Bike",
+      "Kilograms": "50"
+    },
+    {
+      "Id": "5",
+      "Name": "Weight Bench",
+      "Kilograms": "30"
+    },
+    {
+      "Id": "6",
+      "Name": "Kettlebell",
+      "Kilograms": "10"
+    },
+    {
+      "Id": "7",
+      "Name": "Resistance Band",
+      "Kilograms": "2"
+    },
+    {
+      "Id": "8",
+      "Name": "Medicine Ball",
+      "Kilograms": "8"
+    },
+    {
+      "Id": "9",
+      "Name": "Jump Rope",
+      "Kilograms": "1"
+    },
+    {
+      "Id": "10",
+      "Name": "Yoga Mat",
+      "Kilograms": "3"
+    }
+  ]
