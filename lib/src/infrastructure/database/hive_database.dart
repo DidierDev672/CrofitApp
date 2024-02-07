@@ -42,6 +42,16 @@ class HiveDatabase {
     _myBox.put("EXERCISE", exerciseList);
   }
 
+  /*void updateToDatabase(String queryName, String exerciseName, String weight,
+      String repetitions, String sections) {
+    /*exercise.name = exerciseName;
+    exercise.weight = weight;
+    exercise.repetitions = repetitions;
+    exercise.sections = sections;
+
+    _myBox.put(exerciseName, exercise);*/
+  }*/
+
   //* Read data, and return a list of workouts.
   List<Workout> readFromDatabase() {
     List<Workout> mySavedWorkouts = [];

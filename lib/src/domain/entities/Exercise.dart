@@ -1,8 +1,8 @@
 class Exercise {
-  final String name;
-  final String weight;
-  final String repetitions;
-  final String sections;
+  String name;
+  String weight;
+  String repetitions;
+  String sections;
   bool isCompleted;
   Exercise(
       {required this.name,

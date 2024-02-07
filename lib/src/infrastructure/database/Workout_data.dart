@@ -85,7 +85,66 @@ class WorkoutData extends ChangeNotifier {
     db.saveToDatabase(workoutList);
   }
 
-  //Check off exercise.
+  //* Edit an workout in name.
+  void editWorkout(String queryWorkout, String workoutName) {
+    Workout filteredWorkout =
+        workoutList.firstWhere((element) => element.name == queryWorkout);
+
+    filteredWorkout.name = workoutName;
+    notifyListeners();
+    db.saveToDatabase(workoutList);
+    loadHeatMap();
+  }
+
+  //* Edit  an existing exercise in a workout.
+  void editExercise(String workoutName, String queryExercise,
+      String exerciseName, String weight, String repetitions, String sections) {
+    List<Exercise> filteredExercises =
+        workoutList.firstWhere((w) => w.name == workoutName).exercises;
+
+    Exercise e = filteredExercises
+        .firstWhere((element) => element.name == queryExercise);
+
+    //* Updates the assigned fiscal year.
+    e.name = exerciseName;
+    e.weight = weight;
+    e.repetitions = repetitions;
+    e.sections = sections;
+
+    notifyListeners();
+    db.saveToDatabase(workoutList);
+    loadHeatMap();
+  }
+
+  // * Delete workout by name workout
+  void deleteWorkout(String queryWorkout) {
+    Workout filteredWorkout =
+        workoutList.firstWhere((element) => element.name == queryWorkout);
+
+    int index = workoutList.indexOf(filteredWorkout);
+    workoutList.removeAt(index);
+    notifyListeners();
+    db.saveToDatabase(workoutList);
+    loadHeatMap();
+  }
+
+  //* Delete exercise by name exercise
+  void deleteExercise(String workoutName, String queryExercise) {
+    List<Exercise> filteredExercises = workoutList
+        .firstWhere((element) => element.name == workoutName)
+        .exercises;
+
+    Exercise e = filteredExercises
+        .firstWhere((element) => element.name == queryExercise);
+
+    int index = filteredExercises.indexOf(e);
+    filteredExercises.removeAt(index);
+    notifyListeners();
+    db.saveToDatabase(workoutList);
+    loadHeatMap();
+  }
+
+  //* Check off exercise.
   void checkOffExercise(String workoutName, String exerciseName) {
     // Find the relevant workout and relevant exercise in that workout.
     Exercise relevantExercise = getRevelantExercise(workoutName, exerciseName);
@@ -97,7 +156,7 @@ class WorkoutData extends ChangeNotifier {
     loadHeatMap();
   }
 
-  // Return relevant workout object, given a workout name.
+  //* Return relevant workout object, given a workout name.
   Workout getRelevantWorkout(String workoutName) {
     Workout relevantWorkout =
         workoutList.firstWhere((workout) => workout.name == workoutName);
@@ -105,7 +164,7 @@ class WorkoutData extends ChangeNotifier {
     return relevantWorkout;
   }
 
-  //Return relevant exercise object, given a workout name + exercise name
+  //* Return relevant exercise object, given a workout name + exercise name
   Exercise getRevelantExercise(String workoutName, String exerciseName) {
     //Find relevant workout first.
     Workout relevantWorkout = getRelevantWorkout(workoutName);
@@ -117,7 +176,7 @@ class WorkoutData extends ChangeNotifier {
     return relevantExercise;
   }
 
-  //Get start date
+  //* Get start date
   String getStartDate() {
     return db.getStartDate();
   }

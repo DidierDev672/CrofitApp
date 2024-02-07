@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../StyledText.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -24,13 +25,19 @@ class _HomePageState extends State<Home> {
 
   //* Text controller.
   final newWorkoutNameController = TextEditingController();
+  String nameWorkout = "";
+
   //Create a new workout.
   void createNewWorkout() {
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
               title: const Text("Create new workout"),
-              content: TextField(controller: newWorkoutNameController),
+              content: TextField(
+                controller: newWorkoutNameController,
+                decoration: const InputDecoration(
+                    border: OutlineInputBorder(), labelText: 'Name workout'),
+              ),
               actions: [
                 //? Save button.
                 MaterialButton(
@@ -60,19 +67,74 @@ class _HomePageState extends State<Home> {
     //* Get workout name form text controller.
     String newWorkoutName = newWorkoutNameController.text;
     //* Add workout to workout data list.
-    Provider.of<WorkoutData>(context, listen: false).addWorkout(newWorkoutName);
-    //* Pop dialog box.
-    Navigator.pop(context);
-    clear();
+    if (newWorkoutName != '') {
+      Provider.of<WorkoutData>(context, listen: false)
+          .addWorkout(newWorkoutName);
+      //* Pop dialog box.
+      Navigator.pop(context);
+      clear();
+    }
+  }
+
+  //? Update workout
+  void updateWorkout() {
+    String updateWorkout = newWorkoutNameController.text;
+    if (updateWorkout != '') {
+      Provider.of<WorkoutData>(context, listen: false)
+          .editWorkout(nameWorkout, updateWorkout);
+      clear();
+      Navigator.of(context).pop();
+    }
+  }
+
+//* Delete workout
+  void deleteWorkout() {
+    Provider.of<WorkoutData>(context, listen: false).deleteWorkout(nameWorkout);
   }
 
   //! Cancel workout.
-  void cancel() {}
+  void cancel() {
+    Navigator.of(context).pop();
+  }
 
   // * Clear controllers.
   void clear() {
     newWorkoutNameController.clear();
     clear();
+  }
+
+  //* Workouts settings
+  void settingsWorkouts(String queryWorkout) {
+    nameWorkout = queryWorkout;
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: StyledText(
+                  text: 'Edit workout',
+                  style: TextStyle(
+                      color: Colors.grey.shade800,
+                      fontSize: 16.5,
+                      fontWeight: FontWeight.w600,
+                      fontStyle: FontStyle.italic)),
+              content: TextField(
+                controller: newWorkoutNameController,
+                decoration: const InputDecoration(
+                    border: OutlineInputBorder(), labelText: 'Name workout'),
+              ),
+              actions: [
+                //? Save button.
+                MaterialButton(
+                  onPressed: updateWorkout,
+                  child: const StyledText(text: "Edit", style: TextStyle()),
+                ),
+
+                //!Cancel button.
+                MaterialButton(
+                  onPressed: cancel,
+                  child: const StyledText(text: "Cancel", style: TextStyle()),
+                )
+              ],
+            ));
   }
 
   @override
@@ -115,28 +177,70 @@ class _HomePageState extends State<Home> {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: value.getWorkoutList().length,
-                itemBuilder: (context, index) => ListTile(
-                      leading: FaIcon(
-                        FontAwesomeIcons.dumbbell,
-                        color: Colors.blue.shade400,
-                      ),
-                      title: StyledText(
-                        text: value.getWorkoutList()[index].name,
-                        style: const TextStyle(
-                            fontSize: 13.5,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.black),
-                      ),
-                      trailing: IconButton(
-                        icon: FaIcon(
-                          FontAwesomeIcons.arrowRight,
-                          color: Colors.grey[700],
-                          size: 20,
-                        ),
-                        onPressed: () =>
-                            goToWorkoutPage(value.getWorkoutList()[index].name),
-                      ),
-                    ))
+                itemBuilder: (context, index) => Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Slidable(
+                        endActionPane: ActionPane(
+                            motion: const StretchMotion(),
+                            children: [
+                              // Settings option.
+                              SlidableAction(
+                                onPressed: (context) => {
+                                  settingsWorkouts(
+                                      value.getWorkoutList()[index].name)
+                                },
+                                backgroundColor: Colors.grey.shade800,
+                                icon: Icons.settings,
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              // Delete options.
+                              SlidableAction(
+                                onPressed: (context) {
+                                  deleteWorkout();
+                                },
+                                backgroundColor: Colors.red.shade400,
+                                icon: Icons.delete,
+                                borderRadius: BorderRadius.circular(12),
+                              )
+                            ]),
+                        child: Container(
+                          padding: const EdgeInsets.all(14.5),
+                          decoration: BoxDecoration(
+                              color: Colors.grey[100],
+                              borderRadius: BorderRadius.circular(12)),
+                          child: ListTile(
+                            leading: Container(
+                              width: 40,
+                              height: 40,
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                  color: Colors.blue.shade100,
+                                  borderRadius: BorderRadius.circular(100)),
+                              child: Center(
+                                  child: FaIcon(
+                                FontAwesomeIcons.dumbbell,
+                                color: Colors.blue.shade600,
+                                size: 17.5,
+                              )),
+                            ),
+                            title: StyledText(
+                              text: value.getWorkoutList()[index].name,
+                              style: const TextStyle(
+                                  fontSize: 13.5,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.black),
+                            ),
+                            trailing: IconButton(
+                              icon: FaIcon(
+                                FontAwesomeIcons.arrowRight,
+                                color: Colors.grey[700],
+                                size: 20,
+                              ),
+                              onPressed: () => goToWorkoutPage(
+                                  value.getWorkoutList()[index].name),
+                            ),
+                          ),
+                        ))))
           ],
         ),
       ),
