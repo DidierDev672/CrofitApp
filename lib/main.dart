@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
-//import './src/presentation/Index.dart';
+import './src/presentation/Home.dart';
 import './src/presentation/pages/PhysicalFitness.dart';
 import './src/presentation/pages/Implements.dart';
 import './src/presentation/pages/Login.dart';
 import './src/presentation/pages/TeamPage.dart';
 import './src/presentation/pages/Profile.dart';
-import './src/presentation/pages/Home.dart';
+import 'src/presentation/pages/Workout.dart';
+import './src/presentation/pages/StudentPage.dart';
 
 void main() async {
   //* Initialize hive
@@ -28,6 +29,11 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
       },
       routes: <RouteBase>[
         GoRoute(
+            path: 'home',
+            builder: (BuildContext context, GoRouterState state) {
+              return const Home();
+            }),
+        GoRoute(
           path: 'physical',
           builder: (BuildContext context, GoRouterState state) {
             return const PhysicalFitness();
@@ -39,9 +45,9 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
               return const Implements();
             }),
         GoRoute(
-            path: 'home',
+            path: 'workout',
             builder: (BuildContext context, GoRouterState state) {
-              return const Home();
+              return const Workouts();
             }),
         GoRoute(
             path: 'teams',
@@ -52,20 +58,16 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
             path: 'profile',
             builder: (BuildContext context, GoRouterState state) {
               return const Profile();
+            }),
+        GoRoute(
+            path: 'student',
+            builder: (context, state) {
+              return const StudentPag();
             })
       ]),
 
   //** */ Task creation of path 'Home'
 ]);
-
-/*class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp.router(
-        debugShowCheckedModeBanner: false, routerConfig: _router);
-  }
-}*/
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);

@@ -8,14 +8,14 @@ import '../StyledText.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
-class Home extends StatefulWidget {
-  const Home({super.key});
+class Workouts extends StatefulWidget {
+  const Workouts({super.key});
 
   @override
-  State<Home> createState() => _HomePageState();
+  State<Workouts> createState() => _WorkoutsPageState();
 }
 
-class _HomePageState extends State<Home> {
+class _WorkoutsPageState extends State<Workouts> {
   @override
   void initState() {
     super.initState();
@@ -32,23 +32,24 @@ class _HomePageState extends State<Home> {
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
-              title: const Text("Create new workout"),
+              title: const Text("Nuevo entrenamiento"),
               content: TextField(
                 controller: newWorkoutNameController,
                 decoration: const InputDecoration(
-                    border: OutlineInputBorder(), labelText: 'Name workout'),
+                    border: OutlineInputBorder(),
+                    labelText: 'Nombre del entrenamiento'),
               ),
               actions: [
                 //? Save button.
                 MaterialButton(
                   onPressed: save,
-                  child: const Text("Save"),
+                  child: const Text("Guardar"),
                 ),
 
                 //!Cancel button.
                 MaterialButton(
                   onPressed: cancel,
-                  child: const Text("Cancel"),
+                  child: const Text("Cancelar"),
                 )
               ],
             ));
@@ -110,7 +111,7 @@ class _HomePageState extends State<Home> {
         context: context,
         builder: (context) => AlertDialog(
               title: StyledText(
-                  text: 'Edit workout',
+                  text: 'Editar Entrenamiento',
                   style: TextStyle(
                       color: Colors.grey.shade800,
                       fontSize: 16.5,
@@ -119,19 +120,20 @@ class _HomePageState extends State<Home> {
               content: TextField(
                 controller: newWorkoutNameController,
                 decoration: const InputDecoration(
-                    border: OutlineInputBorder(), labelText: 'Name workout'),
+                    border: OutlineInputBorder(),
+                    labelText: 'Nombre del entrenamiento'),
               ),
               actions: [
                 //? Save button.
                 MaterialButton(
                   onPressed: updateWorkout,
-                  child: const StyledText(text: "Edit", style: TextStyle()),
+                  child: const StyledText(text: "Editar", style: TextStyle()),
                 ),
 
                 //!Cancel button.
                 MaterialButton(
                   onPressed: cancel,
-                  child: const StyledText(text: "Cancel", style: TextStyle()),
+                  child: const StyledText(text: "Cancelar", style: TextStyle()),
                 )
               ],
             ));
@@ -178,7 +180,7 @@ class _HomePageState extends State<Home> {
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: value.getWorkoutList().length,
                 itemBuilder: (context, index) => Padding(
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(8.5),
                     child: Slidable(
                         endActionPane: ActionPane(
                             motion: const StretchMotion(),
@@ -204,10 +206,14 @@ class _HomePageState extends State<Home> {
                               )
                             ]),
                         child: Container(
-                          padding: const EdgeInsets.all(14.5),
+                          padding: const EdgeInsets.all(10.5),
                           decoration: BoxDecoration(
-                              color: Colors.grey[100],
-                              borderRadius: BorderRadius.circular(12)),
+                              gradient: LinearGradient(colors: [
+                                Colors.grey.shade300,
+                                Colors.grey.shade200,
+                                Colors.grey.shade100
+                              ]),
+                              borderRadius: BorderRadius.circular(20)),
                           child: ListTile(
                             leading: Container(
                               width: 40,

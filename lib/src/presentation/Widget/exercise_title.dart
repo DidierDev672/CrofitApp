@@ -28,7 +28,7 @@ class ExerciseTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(7.5),
       child: Slidable(
         endActionPane: ActionPane(motion: const StretchMotion(), children: [
           // Settings option
@@ -48,23 +48,64 @@ class ExerciseTitle extends StatelessWidget {
           )
         ]),
         child: Container(
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.all(14),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            color: Colors.grey[100],
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 1.0,
+                  blurRadius: 5.0,
+                  offset: const Offset(0.0, 2.0))
+            ],
+            borderRadius: BorderRadius.circular(20),
+            gradient: LinearGradient(colors: [
+              Colors.grey.shade200,
+              Colors.grey.shade200,
+              Colors.grey.shade100
+            ]),
           ),
           child: ListTile(
-            title: Text(exerciseName),
+            title: StyledText(
+              text: exerciseName,
+              style:
+                  const TextStyle(fontSize: 16.5, fontWeight: FontWeight.bold),
+            ),
             subtitle: Row(
               children: [
                 // * Weight
-                Chip(label: Text("${weight}kg")),
+                Chip(
+                    backgroundColor: Colors.blue.shade200,
+                    shape: const StadiumBorder(),
+                    padding: const EdgeInsets.all(8.0),
+                    side: BorderSide.none,
+                    label: StyledText(
+                        text: "${weight}kg",
+                        style: const TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.w700))),
                 const SizedBox(width: 8),
                 //* Reps
-                Chip(label: Text("${reps}reps")),
+                Chip(
+                    backgroundColor: Colors.purple.shade200,
+                    shape: const StadiumBorder(),
+                    padding: const EdgeInsets.all(8.0),
+                    side: BorderSide.none,
+                    label: StyledText(
+                      text: "${reps}reps",
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w700, color: Colors.white),
+                    )),
                 const SizedBox(width: 8),
                 // * Sets
-                Chip(label: Text("${sets}sets")),
+                Chip(
+                    backgroundColor: Colors.orange.shade200,
+                    shape: const StadiumBorder(),
+                    padding: const EdgeInsets.all(8.0),
+                    side: BorderSide.none,
+                    label: StyledText(
+                      text: "${sets}sets",
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.w700),
+                    )),
               ],
             ),
             trailing: Checkbox(

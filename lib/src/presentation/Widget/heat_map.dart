@@ -17,19 +17,22 @@ class MyHeatMap extends StatelessWidget {
             boxShadow: [
               BoxShadow(
                   color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 5.0,
-                  blurRadius: 7.0,
+                  spreadRadius: 3.0,
+                  blurRadius: 3.0,
                   offset: const Offset(0.0, 2.0))
             ],
-            gradient: LinearGradient(
-                colors: [Colors.grey.shade200, Colors.grey.shade300])),
+            gradient: LinearGradient(colors: [
+              Colors.grey.shade300,
+              Colors.grey.shade200,
+              Colors.grey.shade100
+            ])),
         child: HeatMap(
             datasets: datasets,
             startDate: createDateTimeObject(startDateYYYYMMDD),
             endDate: DateTime.now().add(const Duration(days: 0)),
             colorMode: ColorMode.color,
-            defaultColor: Colors.green[500],
-            textColor: Colors.black,
+            defaultColor: Colors.blue.shade200,
+            textColor: Colors.grey.shade800,
             showColorTip: false,
             showText: true,
             scrollable: true,

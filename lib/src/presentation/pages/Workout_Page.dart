@@ -2,6 +2,7 @@ import 'package:comicsapp/src/infrastructure/database/Workout_data.dart';
 import 'package:comicsapp/src/presentation/StyledText.dart';
 import 'package:comicsapp/src/presentation/Widget/exercise_title.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class WorkoutPage extends StatefulWidget {
@@ -30,7 +31,7 @@ class _WorkoutPage extends State<WorkoutPage> {
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
-              title: const Text('Add a new exercise'),
+              title: const Text('Nuevo ejercicio'),
               content: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -46,7 +47,7 @@ class _WorkoutPage extends State<WorkoutPage> {
                             focusedBorder: OutlineInputBorder(
                                 borderSide:
                                     BorderSide(color: Colors.purple.shade300)),
-                            labelText: "Name Exercise")),
+                            labelText: "Nombre del ejercicio")),
                     const SizedBox(height: 10),
                     // Weight
                     TextField(
@@ -60,7 +61,7 @@ class _WorkoutPage extends State<WorkoutPage> {
                             focusedBorder: OutlineInputBorder(
                                 borderSide:
                                     BorderSide(color: Colors.purple.shade300)),
-                            labelText: "Assign weight")),
+                            labelText: "Asignar peso")),
                     const SizedBox(height: 10),
                     // reps
                     TextField(
@@ -74,7 +75,7 @@ class _WorkoutPage extends State<WorkoutPage> {
                             focusedBorder: OutlineInputBorder(
                                 borderSide:
                                     BorderSide(color: Colors.purple.shade300)),
-                            labelText: "Assign repetitions")),
+                            labelText: "Asignar repeticiones")),
                     const SizedBox(height: 10),
                     // sets
                     TextField(
@@ -88,17 +89,17 @@ class _WorkoutPage extends State<WorkoutPage> {
                             focusedBorder: OutlineInputBorder(
                                 borderSide:
                                     BorderSide(color: Colors.purple.shade300)),
-                            labelText: "Assign sections")),
+                            labelText: "Asignar secciones")),
                   ],
                 ),
               ),
               actions: [
                 // Save button.
-                MaterialButton(onPressed: save, child: const Text('Save')),
+                MaterialButton(onPressed: save, child: const Text('Guardar')),
                 // Cancel button.
                 MaterialButton(
                   onPressed: cancel,
-                  child: const Text('Cancel'),
+                  child: const Text('Cancelar'),
                 )
               ],
             ));
@@ -113,7 +114,7 @@ class _WorkoutPage extends State<WorkoutPage> {
                   borderRadius: BorderRadius.circular(18)),
               contentTextStyle: TextStyle(color: Colors.grey.shade800),
               title: const StyledText(
-                  text: 'Edit exercise',
+                  text: 'Editar ejercicios',
                   style: TextStyle(
                       fontSize: 19.5,
                       fontWeight: FontWeight.w500,
@@ -133,7 +134,7 @@ class _WorkoutPage extends State<WorkoutPage> {
                             focusedBorder: OutlineInputBorder(
                                 borderSide:
                                     BorderSide(color: Colors.purple.shade300)),
-                            labelText: "Name Exercise")),
+                            labelText: "Nombre del ejercicios")),
                     const SizedBox(height: 10),
                     // Weight
                     TextField(
@@ -147,7 +148,7 @@ class _WorkoutPage extends State<WorkoutPage> {
                             focusedBorder: OutlineInputBorder(
                                 borderSide:
                                     BorderSide(color: Colors.purple.shade300)),
-                            labelText: "Assign weight")),
+                            labelText: "Asignar peso")),
                     const SizedBox(height: 10),
                     // reps
                     TextField(
@@ -161,7 +162,7 @@ class _WorkoutPage extends State<WorkoutPage> {
                             focusedBorder: OutlineInputBorder(
                                 borderSide:
                                     BorderSide(color: Colors.purple.shade300)),
-                            labelText: "Assign repetitions")),
+                            labelText: "Asignar repeticiones")),
                     const SizedBox(height: 10),
                     // sets
                     TextField(
@@ -175,17 +176,17 @@ class _WorkoutPage extends State<WorkoutPage> {
                             focusedBorder: OutlineInputBorder(
                                 borderSide:
                                     BorderSide(color: Colors.purple.shade300)),
-                            labelText: "Assign sections")),
+                            labelText: "Asignar secciones")),
                   ],
                 ),
               ),
               actions: [
                 MaterialButton(
-                    onPressed: editExercise, child: const Text('Edit')),
+                    onPressed: editExercise, child: const Text('Editar')),
                 // Cancel button.
                 MaterialButton(
                   onPressed: cancel,
-                  child: const Text('Cancel'),
+                  child: const Text('Cancelar'),
                 )
               ],
             ));
@@ -196,13 +197,15 @@ class _WorkoutPage extends State<WorkoutPage> {
     String weight = weightController.text;
     String reps = repsController.text;
     String sets = setsController.text;
-    /*if (newExerciseName != '' && weight != '' && reps != '' && sets != '') {
+    if (newExerciseName != '' && weight != '' && reps != '' && sets != '') {
       Provider.of<WorkoutData>(context, listen: false).editExercise(
-          widget.workoutName, newExerciseName, weight, reps, sets);
-    }*/
-
-    Provider.of<WorkoutData>(context, listen: false).editExercise(
-        widget.workoutName, queryExercise, newExerciseName, weight, reps, sets);
+          widget.workoutName,
+          queryExercise,
+          newExerciseName,
+          weight,
+          reps,
+          sets);
+    }
   }
 
   // Save workout.
@@ -238,11 +241,20 @@ class _WorkoutPage extends State<WorkoutPage> {
     return Consumer<WorkoutData>(
       builder: (context, value, child) => Scaffold(
           appBar: AppBar(
+            backgroundColor: Colors.blue.shade500,
+            foregroundColor: Colors.white,
+            centerTitle: true,
             title: Text(widget.workoutName),
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(30),
+                    bottomRight: Radius.circular(30))),
           ),
           floatingActionButton: FloatingActionButton(
+            backgroundColor: Colors.blue.shade500,
+            foregroundColor: Colors.white,
             onPressed: () => createNewExercise(),
-            child: const Icon(Icons.add),
+            child: const FaIcon(FontAwesomeIcons.plus),
           ),
           body: ListView.builder(
               itemCount: value.numberOfExerciseInWorkout(widget.workoutName),

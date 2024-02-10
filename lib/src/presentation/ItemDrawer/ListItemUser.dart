@@ -31,11 +31,7 @@ class ListItemUser extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Text('Usuarios'),
-            onTap: () {},
-          ),
-          ListTile(
-            title: const Text('Usuarios'),
+            title: const Text('Alumnos'),
             onTap: () {},
           ),
           ListTile(
