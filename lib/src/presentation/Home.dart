@@ -1,3 +1,6 @@
+import 'package:comicsapp/src/infrastructure/driver_adapter/services/CoachService.dart';
+import 'package:comicsapp/src/presentation/Widget/DetailsCoach.dart';
+import 'package:comicsapp/src/utils/globals/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import './Widget/Caruosel.dart';
@@ -8,8 +11,31 @@ import './ItemDrawer/ListItemUser.dart';
 import './Widget/work_area.dart';
 //import './Teams.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({super.key});
+
+  @override
+  _HomePage createState() => _HomePage();
+}
+
+class _HomePage extends State<Home> {
+  String name = "";
+  String lastName = "";
+  @override
+  void initState() {
+    super.initState();
+    getNameCoach();
+  }
+
+  void getNameCoach() {
+    var service = CoachService();
+
+    var getName = service.detailCoach(IdCoach);
+    for (var item in getName) {
+      name = item.name;
+      lastName = item.lastName;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +73,10 @@ class Home extends StatelessWidget {
               children: [
                 const Carousel(),
                 const SizedBox(height: 10),
-                const Center(
+                Center(
                   child: StyledText(
-                      text: 'Bienvenido Mario muñoz',
-                      style: TextStyle(
+                      text: 'Bienvenido $name  $lastName',
+                      style: const TextStyle(
                           fontSize: 23.5, fontWeight: FontWeight.bold)),
                 ),
                 const SizedBox(height: 20),
@@ -70,25 +96,13 @@ class Home extends StatelessWidget {
                     padding: const EdgeInsets.all(20.0),
                     child: Column(
                       children: [
-                        const StyledAvatar(
-                          radius: 40.5,
-                          imageUrl:
-                              'https://mixkit.imgix.net/art/preview/mixkit-weeping-man-on-his-own-125-original-large.png?q=80&auto=format%2Ccompress',
-                          initials: 'Mario Muñoz',
-                        ),
-                        StyledText(
-                            text: 'Mario muñoz',
-                            style: TextStyle(
-                                fontSize: 18.5,
-                                fontWeight: FontWeight.w600,
-                                fontStyle: FontStyle.italic,
-                                color: Colors.grey.shade700)),
+                        const DetailsCoach(),
                         const SizedBox(height: 30),
-                        const StyledText(
-                            text: 'Area de trabajo',
-                            style: TextStyle(
+                        StyledText(
+                            text: 'Area de trabajo de $name $lastName',
+                            style: const TextStyle(
                                 fontSize: 24.5,
-                                fontWeight: FontWeight.w400,
+                                fontWeight: FontWeight.bold,
                                 color: Colors.black)),
                         const SizedBox(height: 20),
                         const WorkArea(),

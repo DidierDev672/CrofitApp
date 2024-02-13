@@ -8,52 +8,53 @@ class StudentList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, mainAxisSpacing: 10.5, crossAxisSpacing: 20),
+    return ListView.builder(
         itemCount: students.length,
         itemBuilder: (context, index) {
-          return Container(
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-                gradient: LinearGradient(colors: [
-                  Colors.grey.shade300,
-                  Colors.grey.shade200,
-                  Colors.grey.shade100
-                ]),
-                boxShadow: [
-                  BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      offset: const Offset(0, 4),
-                      blurRadius: 10,
-                      spreadRadius: 2)
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(colors: [
+                    Colors.grey.shade300,
+                    Colors.grey.shade200,
+                    Colors.grey.shade200
+                  ]),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        offset: const Offset(0, 4),
+                        blurRadius: 10,
+                        spreadRadius: 2)
+                  ],
+                  borderRadius: BorderRadius.circular(20)),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    backgroundImage: NetworkImage(students[index].photo),
+                  ),
+                  StyledText(
+                      text: students[index].name,
+                      style: const TextStyle(
+                          fontSize: 16.5, fontWeight: FontWeight.w500)),
+                  const SizedBox(height: 5),
+                  StyledText(
+                      text: students[index].lastName,
+                      style: const TextStyle(
+                          fontSize: 16.5,
+                          fontWeight: FontWeight.w400,
+                          fontStyle: FontStyle.italic)),
+                  const SizedBox(height: 5),
+                  Container(
+                    padding: const EdgeInsets.all(10.5),
+                    child: students[index].subscription == false
+                        ? const Inactive()
+                        : const Active(),
+                  )
                 ],
-                borderRadius: BorderRadius.circular(20)),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CircleAvatar(
-                  backgroundImage: NetworkImage(students[index].photo),
-                ),
-                StyledText(
-                    text: students[index].name,
-                    style: const TextStyle(
-                        fontSize: 16.5, fontWeight: FontWeight.w500)),
-                const SizedBox(height: 5),
-                StyledText(
-                    text: students[index].lastName,
-                    style: const TextStyle(
-                        fontSize: 16.5,
-                        fontWeight: FontWeight.w400,
-                        fontStyle: FontStyle.italic)),
-                const SizedBox(height: 5),
-                Container(
-                  padding: const EdgeInsets.all(10.5),
-                  child: students[index].subscription == false
-                      ? const Inactive()
-                      : const Active(),
-                )
-              ],
+              ),
             ),
           );
         });
@@ -92,7 +93,7 @@ class Inactive extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 80,
+      width: 100,
       height: 40,
       padding: const EdgeInsets.all(10.5),
       decoration: BoxDecoration(

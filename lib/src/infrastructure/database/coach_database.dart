@@ -1,14 +1,27 @@
+import 'package:comicsapp/src/utils/datatime/date_time.dart';
 import 'package:hive/hive.dart';
 import '../../domain/entities/Coach.dart';
 
 class CoachDatabase {
-  final _box = Hive.box<Coach>('coaches');
+  final _boxCoaches = Hive.box('coaches');
 
-  Future<Coach?> login(String email, String password) async {
-    final coach = _box.get(email);
-    if (coach != null && coach.password == password) {
-      return coach;
+  bool previusDataExists() {
+    if (_boxCoaches.isEmpty) {
+      print("Previous data does NOT exists.");
+      _boxCoaches.put("START_DATE", todaysDateYYYYMMDD());
+      return false;
+    } else {
+      print('Previous data does exists');
+      return true;
     }
-    return null;
+  }
+
+  Future<void> saveCoach(Coach coach) {
+    return _boxCoaches.put("COACHES", coach);
+  }
+
+  List<Coach> readFromDatabaseCoach() {
+    List<Coach> listCoach = _boxCoaches.get("COACHES");
+    return listCoach;
   }
 }

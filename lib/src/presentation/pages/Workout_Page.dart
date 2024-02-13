@@ -1,5 +1,6 @@
 import 'package:comicsapp/src/infrastructure/database/Workout_data.dart';
 import 'package:comicsapp/src/presentation/StyledText.dart';
+import 'package:comicsapp/src/presentation/Widget/WidgetAppBar.dart';
 import 'package:comicsapp/src/presentation/Widget/exercise_title.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -240,16 +241,7 @@ class _WorkoutPage extends State<WorkoutPage> {
   Widget build(BuildContext context) {
     return Consumer<WorkoutData>(
       builder: (context, value, child) => Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.blue.shade500,
-            foregroundColor: Colors.white,
-            centerTitle: true,
-            title: Text(widget.workoutName),
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(30),
-                    bottomRight: Radius.circular(30))),
-          ),
+          appBar: const WidgetAppBar(title: 'ENTRENAMIENTOS'),
           floatingActionButton: FloatingActionButton(
             backgroundColor: Colors.blue.shade500,
             foregroundColor: Colors.white,

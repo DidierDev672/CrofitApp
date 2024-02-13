@@ -1,9 +1,13 @@
+import 'package:comicsapp/src/utils/globals/user.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import '../StyledText.dart';
 import '../Widget/StyledField.dart';
 import '../Widget/ButtonLogin.dart';
+
+// Services -> 'Coaches'.
+import '../../infrastructure/driver_adapter/services/CoachService.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -15,9 +19,19 @@ class Login extends StatefulWidget {
 class _LoginPageState extends State<Login> {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
+  var service = CoachService();
 
   void startLogin() {
-    GoRouter.of(context).go('/home');
+    if (usernameController.text != '' && passwordController.text != '') {
+      var start = service.startSession(
+          usernameController.text, passwordController.text);
+      for (var element in start) {
+        IdCoach = element.id;
+      }
+      if (IdCoach > 0) {
+        GoRouter.of(context).go('/home');
+      }
+    }
   }
 
   @override

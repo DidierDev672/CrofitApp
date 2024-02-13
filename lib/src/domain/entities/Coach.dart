@@ -1,5 +1,5 @@
 class Coach {
-  final String id;
+  final int id;
   final String name;
   final String lastName;
   final String email;

@@ -1,5 +1,6 @@
 class Student {
   final int id;
+  final int idCoach;
   final String name;
   final String lastName;
   final String dni;
@@ -9,6 +10,7 @@ class Student {
 
   Student(
       {required this.id,
+      required this.idCoach,
       required this.name,
       required this.lastName,
       required this.dni,
@@ -19,6 +21,7 @@ class Student {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
+      'idCoach': idCoach,
       'name': name,
       'lastName': lastName,
       'dni': dni,
@@ -31,6 +34,7 @@ class Student {
   factory Student.fromMap(Map<String, dynamic> map) {
     return Student(
         id: map['id'],
+        idCoach: map['idCoach'],
         name: map['name'],
         lastName: map['lastName'],
         dni: map['dni'],

@@ -11,6 +11,10 @@ import './src/presentation/pages/TeamPage.dart';
 import './src/presentation/pages/Profile.dart';
 import 'src/presentation/pages/Workout.dart';
 import './src/presentation/pages/StudentPage.dart';
+//import './src/presentation/pages/WorkoutOne.dart';
+
+// Responsive -> framework.
+import 'package:responsive_builder/responsive_builder.dart';
 
 void main() async {
   //* Initialize hive
@@ -70,14 +74,18 @@ final GoRouter _router = GoRouter(routes: <RouteBase>[
 ]);
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => WorkoutData(),
-      child: MaterialApp.router(
-          debugShowCheckedModeBanner: false, routerConfig: _router),
-    );
+    return ResponsiveApp(builder: (context) {
+      return ChangeNotifierProvider(
+        create: (context) => WorkoutData(),
+        child: MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          routerConfig: _router,
+        ),
+      );
+    });
   }
 }

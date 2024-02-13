@@ -1,108 +1,32 @@
 import 'package:comicsapp/src/domain/entities/Student.dart';
+import 'package:comicsapp/src/infrastructure/driver_adapter/services/StudentService.dart';
 import 'package:comicsapp/src/presentation/StyledText.dart';
+import 'package:comicsapp/src/presentation/Widget/WidgetAppBar.dart';
+import 'package:comicsapp/src/utils/globals/user.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import './Student.dart';
 
-class StudentPag extends StatelessWidget {
+class StudentPag extends StatefulWidget {
   const StudentPag({super.key});
   @override
+  // ignore: library_private_types_in_public_api
+  _StudentPage createState() => _StudentPage();
+}
+
+class _StudentPage extends State<StudentPag> {
+  List<Student> filterStudent(bool sub) {
+    var service = StudentService();
+    var student = service.getStudent(IdCoach, sub);
+    return student;
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final students = [
-      Student(
-          id: 1,
-          name: 'Didier',
-          lastName: 'Arias',
-          dni: '1038134311',
-          email: 'ariasdev672@gmail.com',
-          subscription: false,
-          photo: ''),
-      Student(
-          id: 2,
-          name: 'Kevin',
-          lastName: 'Torres',
-          dni: '1038134311',
-          email: 'imkevintorres@gmail.com',
-          subscription: true,
-          photo: ''),
-      Student(
-          id: 3,
-          name: 'Jhorlenys',
-          lastName: 'Peña',
-          dni: '0986345567',
-          email: 'Imjhorlenyspeña@gmail.com',
-          subscription: false,
-          photo: ''),
-      Student(
-          id: 4,
-          name: 'John',
-          lastName: 'Doe',
-          dni: '1234556789',
-          email: 'john.doe@gmail.com',
-          subscription: true,
-          photo: ''),
-      Student(
-          id: 5,
-          name: 'Jane',
-          lastName: 'Smith',
-          dni: '0987654321',
-          email: 'jane.smith@gmail.com',
-          subscription: false,
-          photo: ''),
-      Student(
-          id: 6,
-          name: 'Michael',
-          lastName: 'Johnson',
-          dni: '4567890123',
-          email: 'michael.johnson@gmail.com',
-          subscription: true,
-          photo: ''),
-      Student(
-          id: 7,
-          name: 'Emily',
-          lastName: 'Williams',
-          dni: '3210987654',
-          email: 'emily.williams@example.com',
-          subscription: true,
-          photo: '')
-    ];
-
-    List<Student> filterStudent(bool subcreation) {
-      List<Student> studentFilter = [];
-      for (var purpil in students) {
-        if (purpil.subscription == subcreation) {
-          studentFilter.add(purpil);
-        }
-      }
-      return studentFilter;
-    }
-
     return DefaultTabController(
         length: 2,
         child: Scaffold(
-            appBar: AppBar(
-              backgroundColor: Colors.blue.shade500,
-              foregroundColor: Colors.white,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(30),
-                    bottomRight: Radius.circular(30)),
-              ),
-              centerTitle: true,
-              title: const StyledText(
-                  text: 'ALUMNOS',
-                  style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold)),
-              actions: [
-                CircleAvatar(
-                  backgroundColor: Colors.blue.shade100,
-                  radius: 40.5,
-                  child: const StyledText(text: 'MM', style: TextStyle()),
-                )
-              ],
-            ),
+            appBar: const WidgetAppBar(title: 'ALUMNOS'),
             body: Column(children: [
               TabBar(labelColor: Colors.blue.shade400, tabs: const [
                 Tab(
