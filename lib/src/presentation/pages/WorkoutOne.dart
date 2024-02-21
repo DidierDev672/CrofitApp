@@ -1,4 +1,5 @@
 import 'package:comicsapp/src/domain/entities/WorkoutOne.dart';
+import 'package:comicsapp/src/infrastructure/database/WorkoutOne_data.dart';
 import 'package:comicsapp/src/presentation/StyledText.dart';
 import 'package:comicsapp/src/presentation/Widget/WidgetAppBar.dart';
 import 'package:comicsapp/src/presentation/pages/ExerciseOne.dart';
@@ -6,8 +7,8 @@ import 'package:comicsapp/src/utils/globals/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import '../../infrastructure/driver_adapter/services/WorkoutService.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class WorkoutOnePage extends StatefulWidget {
   const WorkoutOnePage({super.key});
@@ -24,14 +25,18 @@ class _WorkoutOne extends State<WorkoutOnePage> {
     getWorkout();
   }
 
-  List<WorkoutOne> listWorkout = [];
+  final service = WorkoutService();
+  final nameWorkouts = TextEditingController();
+  List<WorkoutOne> listWorkout = WorkoutOneData().readWorkouts();
   void getWorkout() {
-    var service = WorkoutService();
-
-    var workouts = service.getWorkout(IdCoach);
+    var workouts = service.getAllWorkouts();
     for (var item in workouts) {
       listWorkout.add(item);
     }
+    /*var workouts = service.getWorkout(IdCoach);
+    for (var item in workouts) {
+      listWorkout.add(item);
+    }*/
   }
 
   void goToExercisePage(String nameWorkout, int idWorkout) {
@@ -44,11 +49,81 @@ class _WorkoutOne extends State<WorkoutOnePage> {
                 )));
   }
 
+  void saveWorkouts() {
+    String nameWork = nameWorkouts.text;
+    if (nameWork != '') {
+      service.createWorkout(IdCoach, 2, nameWork);
+      clear();
+      Navigator.pop(context);
+    }
+  }
+
+  void cancel() {
+    clear();
+    Navigator.pop(context);
+  }
+
+  void clear() {
+    nameWorkouts.clear();
+  }
+
+  // Create new workouts
+  void createWorkouts() {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: const StyledText(
+                  text: 'Nuevo entranamiento',
+                  style:
+                      TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold)),
+              content: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TextField(
+                      controller: nameWorkouts,
+                      decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Nombre del entramiento'),
+                      style: const TextStyle(fontSize: 16.0),
+                      cursorColor: Colors.blue,
+                      cursorWidth: 2.0,
+                      textAlign: TextAlign.center,
+                      maxLength: 100,
+                      enabled: true,
+                    )
+                  ],
+                ),
+              ),
+              actions: [
+                // Save button.
+                MaterialButton(
+                  onPressed: saveWorkouts,
+                  child: const StyledText(
+                      text: 'Guardar', style: TextStyle(fontSize: 16.0)),
+                ),
+
+                // Cancel button.
+                MaterialButton(
+                  onPressed: cancel,
+                  child: const StyledText(
+                      text: 'Cancelar', style: TextStyle(fontSize: 16.0)),
+                )
+              ],
+            ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const WidgetAppBar(
         title: 'Entrenamiento',
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.blue.shade500,
+        onPressed: createWorkouts,
+        child: const FaIcon(FontAwesomeIcons.plus, color: Colors.white),
       ),
       body: ListView.builder(
           itemCount: listWorkout.length,

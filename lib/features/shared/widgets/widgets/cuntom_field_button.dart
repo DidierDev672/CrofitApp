@@ -1,16 +1,17 @@
-import 'package:comicsapp/src/presentation/StyledText.dart';
 import 'package:flutter/material.dart';
 
-class ButtonLogin extends StatelessWidget {
+class CustomFieldButton extends StatelessWidget {
   final void Function()? onPressed;
   final String text;
   final Color? buttonColor;
-  const ButtonLogin(
+
+  const CustomFieldButton(
       {super.key, this.onPressed, required this.text, this.buttonColor});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(Object context) {
     const radius = Radius.circular(10);
+
     return FilledButton(
       style: FilledButton.styleFrom(
         backgroundColor: buttonColor,
@@ -19,12 +20,7 @@ class ButtonLogin extends StatelessWidget {
                 bottomLeft: radius, bottomRight: radius, topLeft: radius)),
       ),
       onPressed: onPressed,
-      child: StyledText(
-          text: text,
-          style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: Colors.blue.shade600)),
+      child: Text(text),
     );
   }
 }

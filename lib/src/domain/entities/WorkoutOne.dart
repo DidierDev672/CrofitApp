@@ -1,7 +1,14 @@
+import 'package:hive_flutter/adapters.dart';
+
+@HiveType(typeId: 0)
 class WorkoutOne {
+  @HiveField(0)
   int idCoach;
+  @HiveField(2)
   int idUser;
+  @HiveField(3)
   int idWorkout;
+  @HiveField(4)
   String nameWorkout;
 
   WorkoutOne(
