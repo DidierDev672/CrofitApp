@@ -97,6 +97,8 @@ class _LoginPageState extends ConsumerWidget {
           controller: passwordController,
           hintText: 'Contraseña',
           obscureText: true,
+          onFieldSubmitted: (_) =>
+              ref.read(LoginFormProvider.notifier).onFormSubmit(),
           onChanged: ref.read(LoginFormProvider.notifier).onPasswordChanged,
           errorMessage:
               loginForm.isFormPosted ? loginForm.password.errorMessage : null,

@@ -10,6 +10,7 @@ class StyledField extends StatelessWidget {
   final String? errorMessage;
   final TextInputType? keyboardType;
   final Function(String)? onChanged;
+  final Function(String)? onFieldSubmitted;
   final String? Function(String?)? validator;
   const StyledField(
       {super.key,
@@ -20,6 +21,7 @@ class StyledField extends StatelessWidget {
       this.errorMessage,
       this.keyboardType = TextInputType.text,
       this.onChanged,
+      this.onFieldSubmitted,
       this.validator});
 
   @override
@@ -48,6 +50,7 @@ class StyledField extends StatelessWidget {
       child: TextFormField(
         onChanged: onChanged,
         validator: validator,
+        onFieldSubmitted: onFieldSubmitted,
         keyboardType: keyboardType,
         style: const TextStyle(fontSize: 20, color: Colors.white),
         decoration: InputDecoration(
